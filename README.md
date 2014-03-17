@@ -23,6 +23,8 @@ php artisan facade:resolve "C*"
 
 Any would work.
 
+![](http://i.imgur.com/i9BcSPy.png)
+
 Enjoy!
 
 # License
