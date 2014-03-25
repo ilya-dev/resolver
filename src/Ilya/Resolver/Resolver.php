@@ -1,6 +1,7 @@
 <?php namespace Ilya\Resolver;
 
-use Str, Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\AliasLoader;
 
 class Resolver {
 
