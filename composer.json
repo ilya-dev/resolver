@@ -1,6 +1,10 @@
 {
     "name": "ilya/resolver",
     "description": "Don't let the magic confuse you - these are not static classes!",
+    "license": "MIT",
+    "keywords": [
+        "laravel", "facades", "resolver"    
+    ],
     "authors": [
         {
             "name": "Ilya",
