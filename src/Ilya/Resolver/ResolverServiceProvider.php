@@ -5,13 +5,6 @@ use Illuminate\Support\ServiceProvider;
 class ResolverServiceProvider extends ServiceProvider {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
-
-	/**
 	 * Register the service provider.
 	 *
 	 * @return void
@@ -22,15 +15,15 @@ class ResolverServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Register Artisan commands
+     * Register the Artisan commands
      *
      * @return void
      */
     protected function registerArtisanCommands()
     {
-        $this->app['resolver.resolve'] = $this->app->share(function($app)
+        $this->app->singleton('resolver.resolve', function($app)
         {
-            $resolver = $app->make('\Ilya\Resolver\Resolver');
+            $resolver = $app->make('Ilya\Resolver\Resolver');
 
             return new Commands\ResolveCommand($resolver);
         });
@@ -38,14 +31,5 @@ class ResolverServiceProvider extends ServiceProvider {
         $this->commands('resolver.resolve');
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
 }
+
