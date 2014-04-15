@@ -6,19 +6,23 @@ use Illuminate\Foundation\AliasLoader;
 class Resolver {
 
     /**
-     * Resolve all facades matching given query string
+     * Resolve all facades that match the query string
      *
-     * @param  string $query
+     * @param string $query
      * @return array
      */
     public function resolve($query)
     {
         $aliases = $this->filter($this->getAliases(), $query);
-        $data    = [];
+
+        $data = [];
 
         foreach ($aliases as $alias => $facade)
         {
-            if ( ! $this->isFacade($facade)) continue;
+            if ( ! $this->isFacade($facade))
+            {
+                continue;
+            }
 
             $data[] = $this->createRow($alias, $facade);
         }
@@ -29,8 +33,8 @@ class Resolver {
     /**
      * Create a row
      *
-     * @param  string $alias
-     * @param  string $facade
+     * @param string $alias
+     * @param string $facade
      * @return array
      */
     protected function createRow($alias, $facade)
@@ -53,10 +57,10 @@ class Resolver {
     }
 
     /**
-     * Filter given data by query string
+     * Filter data by the query string
      *
-     * @param  array  $aliases
-     * @param  string $query
+     * @param array $aliases
+     * @param string $query
      * @return array
      */
     protected function filter(array $aliases, $query)
@@ -65,7 +69,10 @@ class Resolver {
 
         foreach ($aliases as $alias => $facade)
         {
-            if ( ! Str::is(Str::studly($query), $alias)) continue;
+            if ( ! Str::is(Str::studly($query), $alias))
+            {
+                continue;
+            }
 
             $result[$alias] = $facade;
         }
@@ -74,43 +81,42 @@ class Resolver {
     }
 
     /**
-     * Determine whether the given class is a facade or not
+     * Determine whether the given class is a Facade
      *
-     * @param  string $class
+     * @param string $class
      * @return bool
      */
     protected function isFacade($class)
     {
-        if ( ! class_exists($class)) return false;
+        if ( ! \class_exists($class))
+        {
+            return false;
+        }
 
-        return is_subclass_of($class, '\Illuminate\Support\Facades\Facade');
+        return \is_subclass_of($class, 'Illuminate\Support\Facades\Facade');
     }
 
     /**
-     * Resolve given facade
+     * "Resolve" the facade
      *
-     * @param  string $facade
-     * @param  bool   $toString
+     * @param string $facade
      * @return mixed
      */
-    protected function doResolve($facade, $toString = true)
+    protected function doResolve($facade)
     {
-        $instance = call_user_func([$facade, 'getFacadeRoot']);
+        $instance = \call_user_func([$facade, 'getFacadeRoot']);
 
-        return $toString ? get_class($instance) : $instance;
+        return \get_class($instance);
     }
 
     /**
-     * Get the corresponding IoC binding
+     * Get the IoC binding
      *
-     * @param  string $facade
+     * @param string $facade
      * @return string
      */
     protected function getBinding($facade)
     {
-        // extremely dirty hack
-        // looking for a better approach
-
         $class = new \ReflectionClass(new $facade);
 
         $method = $class->getMethod('getFacadeAccessor');
@@ -120,7 +126,7 @@ class Resolver {
         $value = $method->invoke(null);
 
         // an object may be returned
-        return is_string($value) ? $value : '';
+        return \is_string($value) ? $value : '';
     }
 
 }
