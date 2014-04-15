@@ -2,42 +2,42 @@
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Ilya\Resolver\Resolver;
 
 class ResolveCommand extends Command {
 
     /**
-     * Name
+     * The name of the command
      *
      * @var string
      */
     protected $name = 'facade:resolve';
 
     /**
-     * Description
+     * The command description
      *
      * @var string
      */
-    protected $description = 'Show underlying class and corresponding IoC binding';
+    protected $description = 'Show underlying classes and the corresponding IoC bindings';
 
     /**
-     * Resolver instance
+     * The Resolver instance
      *
      * @var \Ilya\Resolver\Resolver
      */
     protected $resolver;
 
     /**
-     * Table helper instance
+     * The TableHelper instance
      *
      * @var \Symfony\Component\Console\Helper\TableHelper
      */
     protected $table;
 
     /**
-     * Constructor
+     * The constructor
      *
+     * @param \Ilya\Resolver\Resolver $resolver
      * @return void
      */
     public function __construct(Resolver $resolver)
@@ -48,7 +48,7 @@ class ResolveCommand extends Command {
     }
 
     /**
-     * Fire
+     * Execute the command
      *
      * @return void
      */
@@ -62,8 +62,9 @@ class ResolveCommand extends Command {
     }
 
     /**
-     * Display given data
+     * Display the data
      *
+     * @param array $data
      * @return void
      */
     protected function display(array $data)
@@ -77,7 +78,7 @@ class ResolveCommand extends Command {
     }
 
     /**
-     * Arguments
+     * Get the arguments list
      *
      * @return array
      */
@@ -89,3 +90,4 @@ class ResolveCommand extends Command {
     }
 
 }
+
